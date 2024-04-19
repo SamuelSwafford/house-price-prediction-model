@@ -14,15 +14,18 @@ columns_to_clean = ['List Price', 'Close Price', 'SqFt', 'LP$/SqFt', 'Close$/SqF
 for column in columns_to_clean:
     data[column] = data[column].replace('[\$,]', '', regex=True).replace(',', '', regex=True).astype(float)
 
-# Filter the dataset for a specific Zip Code, e.g., 78660, and only Single Family homes
-data_filtered = data[(data['Zip Code'] == 78660) & (data['Type of Home'] == 'Single Family')]
+# Filter the dataset for only Single Family homes
+data_filtered = data[data['Type of Home'] == 'Single Family']
 
-# Drop the 'MLS Area', 'Levels', and 'Type of Home' as they are not needed anymore after filtering
+# Drop the 'MLS Area' and 'Levels' as they are not needed anymore after filtering
 data_filtered = data_filtered.drop(columns=['MLS Area', 'Levels', 'Type of Home'])
 
 # Define the features and target variable for the filtered dataset
 X_filtered = data_filtered.drop(columns=['Listing ID', 'St', 'Address', 'Close Price', 'Close Date', 'List Price', 'LP$/SqFt', 'Close$/SqFt'])
 y_filtered = data_filtered['Close Price']
+
+# Include Zip Code as a numeric variable in the model
+X_filtered['Zip Code'] = data_filtered['Zip Code'].astype(float)  # Ensure Zip Code is treated as numeric
 
 # Split the dataset into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X_filtered, y_filtered, test_size=0.2, random_state=42)
