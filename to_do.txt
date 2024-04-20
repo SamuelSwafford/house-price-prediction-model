@@ -1,0 +1,6 @@
+- add sql code
+- clean up gradient model code and integrate it into reopo
+- run linear regression model for all zip codes and compare accuracy
+- determine if the relationship between factors other than zip code influence price in the same way
+    when looking at different zip codes, i.e., is there a way to look at the influence of these factors
+    on price when controlling for zip code?
