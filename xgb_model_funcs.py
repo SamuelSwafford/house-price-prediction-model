@@ -5,8 +5,7 @@ import json
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 
-
-def load_and_clean_data(filepath):
+def load_and_clean_data(filepath, include_condos=True, treat_levels_as_categorical=False, remove_sqft_outliers=False):
     """
     Load and clean the dataset from a CSV file.
     """
@@ -16,25 +15,33 @@ def load_and_clean_data(filepath):
     columns_to_clean = ['List Price', 'Close Price', 'SqFt', 'LP$/SqFt', 'Close$/SqFt']
     for column in columns_to_clean:
         data[column] = data[column].replace('[\$,]', '', regex=True).replace(',', '', regex=True).astype(float)
-    
+
     # Dropping columns that may not be relevant or are textual descriptions
     columns_to_drop = ['St', 'MLS Area', 'Address', 'Close Date', 'Type of Home']
     data.drop(columns=columns_to_drop, inplace=True, errors='ignore')
 
+    # Conditionally exclude condo data
+    if not include_condos and 'Home Type' in data.columns:
+        data = data[data['Home Type'] != 'Condo']
+
     # Handling 'Levels' if it's categorical
-    # If 'Levels' contains categorical data like 'One', 'Two', convert it to numeric
-    # This is just an example, adjust the mapping according to your data specifics
-    levels_mapping = {'One': 1, 'Two': 2, 'Three': 3}
-    if 'Levels' in data.columns:
+    if treat_levels_as_categorical and 'Levels' in data.columns:
+        levels_mapping = {'One': 1, 'Two': 2, 'Three': 3}
         data['Levels'] = data['Levels'].map(levels_mapping)
+
+    # Remove outliers in 'SqFt' if required
+    if remove_sqft_outliers and 'SqFt' in data.columns:
+        mean_sqft = data['SqFt'].mean()
+        std_sqft = data['SqFt'].std()
+        data = data[(data['SqFt'] > (mean_sqft - 3 * std_sqft)) & (data['SqFt'] < (mean_sqft + 3 * std_sqft))]
 
     return data
 
-def prepare_training_testing_data(filepath, test_size=0.2, random_state=42):
+def prepare_training_testing_data(filepath, test_size=0.2, random_state=42, include_condos=True, treat_levels_as_categorical=False, remove_sqft_outliers=False):
     """
     Load data, clean it, and split into training and testing datasets.
     """
-    data = load_and_clean_data(filepath)
+    data = load_and_clean_data(filepath, include_condos, treat_levels_as_categorical, remove_sqft_outliers)
     y = data.pop('Close Price')  # Assuming 'Close Price' is the target variable
     X = data
     x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
@@ -43,8 +50,6 @@ def prepare_training_testing_data(filepath, test_size=0.2, random_state=42):
 def perform_grid_search(x_train, y_train, filename='grid_search_results.json'):
     """
     Perform GridSearchCV to find the best hyperparameters for the XGBoost model.
-    This function sets up a grid of parameters, uses cross-validation to find the best set,
-    and saves the results to a JSON file.
     """
     param_grid = {
         'max_depth': [3, 4, 5],
@@ -60,11 +65,11 @@ def perform_grid_search(x_train, y_train, filename='grid_search_results.json'):
     grid_search = GridSearchCV(model, param_grid, cv=5, scoring='neg_mean_squared_error', n_jobs=-1, verbose=1)
     grid_search.fit(x_train, y_train)
     best_params = grid_search.best_params_
-    
+
     # Save best parameters to JSON file
     with open(filename, 'w') as f:
         json.dump(best_params, f)
-    
+
     return grid_search.best_estimator_, best_params
 
 def load_params_from_file(filename='grid_search_results.json'):
@@ -78,8 +83,6 @@ def load_params_from_file(filename='grid_search_results.json'):
 def train_and_evaluate_model(x_train, y_train, x_test, y_test, params):
     """
     General function to train and evaluate an XGBoost model.
-    This function builds the model using given parameters, fits it on training data,
-    makes predictions on the test set, and evaluates these predictions.
     """
     model = xgb.XGBRegressor(**params)
     model.fit(x_train, y_train)
