@@ -1,6 +1,7 @@
 - add stuff to linear regression section of power point
--- show plot of r-square value as a function of the number of data points
--- fit different functions to it
+-- Indroduce the linear model and the input factors used for this one
+---discuss the reasoning for the the chosen inputs
+--discuss which inputs had the largest impact on house price
 -- add more performance metrics
 -- add slide where zillow listing is compared to model prediction using both models
 - clean up gradient notebook and add some sections

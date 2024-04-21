@@ -27,7 +27,7 @@ def get_model_with_zip():
         return None, None, None
     data = data.drop(columns=['MLS Area', 'Levels', 'Type of Home'])
 
-    X = data.drop(columns=['Listing ID', 'St', 'Address', 'Close Price', 'Close Date', 'List Price', 'LP$/SqFt', 'Close$/SqFt'])
+    X = data.drop(columns=['Listing ID', 'St', 'Address', 'Close Price', 'Close Date', 'List Price', 'LP$/SqFt', 'Close$/SqFt', '#'])
     y = data['Close Price']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
@@ -50,7 +50,7 @@ def get_model_for_zip(zip_code):
         return None, None, None
     data = data.drop(columns=['MLS Area', 'Levels', 'Type of Home'])
 
-    X = data.drop(columns=['Listing ID', 'St', 'Address', 'Close Price', 'Close Date', 'List Price', 'LP$/SqFt', 'Close$/SqFt'])
+    X = data.drop(columns=['Listing ID', 'St', 'Address', 'Close Price', 'Close Date', 'List Price', 'LP$/SqFt', 'Close$/SqFt', '#'])
     y = data['Close Price']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
