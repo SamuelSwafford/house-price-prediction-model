@@ -1,8 +1,9 @@
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
-import numpy as np
+from sklearn.preprocessing import StandardScaler
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -29,7 +30,12 @@ def get_model_with_zip():
 
     X = data.drop(columns=['Listing ID', 'St', 'Address', 'Close Price', 'Close Date', 'List Price', 'LP$/SqFt', 'Close$/SqFt', '#'])
     y = data['Close Price']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    # Standardizing the features
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+    
+    X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
     model = LinearRegression()
     model.fit(X_train, y_train)
@@ -41,18 +47,22 @@ def get_model_with_zip():
 
 def get_model_for_zip(zip_code):
     """
-    Train a linear regression model for properties in a specific zip code.
+    Train a linear regression model for properties in a specific zip code, and return the model along with its scaler.
     """
     data = load_and_clean_data('data.csv')
     data = data[(data['Zip Code'] == zip_code) & (data['Type of Home'] == 'Single Family')]
     if data.empty:
         print(f"No data available for ZIP code {zip_code} with Single Family homes.")
-        return None, None, None
+        return None, None, None, None
     data = data.drop(columns=['MLS Area', 'Levels', 'Type of Home'])
 
     X = data.drop(columns=['Listing ID', 'St', 'Address', 'Close Price', 'Close Date', 'List Price', 'LP$/SqFt', 'Close$/SqFt', '#'])
     y = data['Close Price']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+    
+    X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
     model = LinearRegression()
     model.fit(X_train, y_train)
@@ -60,4 +70,4 @@ def get_model_for_zip(zip_code):
     rmse = np.sqrt(mse)
     r_squared = model.score(X_test, y_test)
 
-    return model, rmse, r_squared
+    return model, rmse, r_squared, scaler
