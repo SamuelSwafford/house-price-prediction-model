@@ -5,30 +5,28 @@ import json
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 
+
 def load_and_clean_data(filepath):
     """
-    Load and preprocess data from a CSV file. Perform initial cleaning operations
-    that could include removing unnecessary columns and converting data types.
+    Load and clean the dataset from a CSV file.
     """
     data = pd.read_csv(filepath)
-    # Remove unnecessary columns
-    unnecessary_columns = ["Listing ID", "St", "MLS Area", "Address", "Close Date", "DOM"]
-    data.drop(columns=unnecessary_columns, inplace=True, errors='ignore')
 
-    # Remove non-numeric characters from financial figures and convert to float
-    financial_columns = ["List Price", "Close Price", "LP$/SqFt", "Close$/SqFt"]
-    for col in financial_columns:
-        if col in data.columns:
-            data[col] = data[col].replace('[\$,]', '', regex=True).astype(float)
+    # Columns to clean for financial figures
+    columns_to_clean = ['List Price', 'Close Price', 'SqFt', 'LP$/SqFt', 'Close$/SqFt']
+    for column in columns_to_clean:
+        data[column] = data[column].replace('[\$,]', '', regex=True).replace(',', '', regex=True).astype(float)
+    
+    # Dropping columns that may not be relevant or are textual descriptions
+    columns_to_drop = ['St', 'MLS Area', 'Address', 'Close Date', 'Type of Home']
+    data.drop(columns=columns_to_drop, inplace=True, errors='ignore')
 
-    # Combine full and half bath columns if present
-    if "# Full Baths" in data.columns and "# Half Baths" in data.columns:
-        data["Total Baths"] = data["# Full Baths"] + 0.5 * data["# Half Baths"]
-        data.drop(columns=["# Full Baths", "# Half Baths"], inplace=True)
-
-    # Convert 'SqFt' to numeric after removing commas if the column exists
-    if 'SqFt' in data.columns:
-        data['SqFt'] = data['SqFt'].replace(",", "").astype(float)
+    # Handling 'Levels' if it's categorical
+    # If 'Levels' contains categorical data like 'One', 'Two', convert it to numeric
+    # This is just an example, adjust the mapping according to your data specifics
+    levels_mapping = {'One': 1, 'Two': 2, 'Three': 3}
+    if 'Levels' in data.columns:
+        data['Levels'] = data['Levels'].map(levels_mapping)
 
     return data
 
