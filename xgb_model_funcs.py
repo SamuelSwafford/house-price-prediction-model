@@ -32,6 +32,16 @@ def load_and_clean_data(filepath):
 
     return data
 
+def prepare_training_testing_data(filepath, test_size=0.2, random_state=42):
+    """
+    Load data, clean it, and split into training and testing datasets.
+    """
+    data = load_and_clean_data(filepath)
+    y = data.pop('Close Price')  # Assuming 'Close Price' is the target variable
+    X = data
+    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
+    return x_train, y_train, x_test, y_test
+
 def perform_grid_search(x_train, y_train, filename='grid_search_results.json'):
     """
     Perform GridSearchCV to find the best hyperparameters for the XGBoost model.
