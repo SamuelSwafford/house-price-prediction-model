@@ -5,14 +5,31 @@ import json
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 
-def load_data(filepath):
+def load_and_clean_data(filepath):
     """
-    Load and preprocess data from a CSV file. This is a placeholder function.
-    Actual preprocessing will depend on the specific requirements of the dataset.
+    Load and preprocess data from a CSV file. Perform initial cleaning operations
+    that could include removing unnecessary columns and converting data types.
     """
     data = pd.read_csv(filepath)
-    # Replace this with actual preprocessing steps as necessary
-    # Example: data['Price'] = data['Price'].replace('[\$,]', '', regex=True).astype(float)
+    # Remove unnecessary columns
+    unnecessary_columns = ["Listing ID", "St", "MLS Area", "Address", "Close Date", "DOM"]
+    data.drop(columns=unnecessary_columns, inplace=True, errors='ignore')
+
+    # Remove non-numeric characters from financial figures and convert to float
+    financial_columns = ["List Price", "Close Price", "LP$/SqFt", "Close$/SqFt"]
+    for col in financial_columns:
+        if col in data.columns:
+            data[col] = data[col].replace('[\$,]', '', regex=True).astype(float)
+
+    # Combine full and half bath columns if present
+    if "# Full Baths" in data.columns and "# Half Baths" in data.columns:
+        data["Total Baths"] = data["# Full Baths"] + 0.5 * data["# Half Baths"]
+        data.drop(columns=["# Full Baths", "# Half Baths"], inplace=True)
+
+    # Convert 'SqFt' to numeric after removing commas if the column exists
+    if 'SqFt' in data.columns:
+        data['SqFt'] = data['SqFt'].replace(",", "").astype(float)
+
     return data
 
 def perform_grid_search(x_train, y_train, filename='grid_search_results.json'):
@@ -72,6 +89,7 @@ def train_and_evaluate_model(x_train, y_train, x_test, y_test, params):
 def trial_1(x_train, y_train, x_test, y_test):
     """
     Trial 1: Baseline model with manually selected hyperparameters.
+    Utilizes parameters loaded from a file to ensure optimal settings.
     """
     params = load_params_from_file()  # Load parameters from file
     return train_and_evaluate_model(x_train, y_train, x_test, y_test, params)
@@ -79,6 +97,7 @@ def trial_1(x_train, y_train, x_test, y_test):
 def trial_2(x_train, y_train, x_test, y_test):
     """
     Trial 2: Parameters adjusted based on GridSearchCV findings.
+    Applies the best parameters found in the previous grid search.
     """
     params = load_params_from_file()  # Load parameters from file
     return train_and_evaluate_model(x_train, y_train, x_test, y_test, params)
@@ -86,6 +105,7 @@ def trial_2(x_train, y_train, x_test, y_test):
 def trial_3(x_train, y_train, x_test, y_test):
     """
     Trial 3: No condo data, treating "levels" as categorical.
+    Focuses on single-family homes and uses encoded levels.
     """
     params = load_params_from_file()  # Load parameters from file
     return train_and_evaluate_model(x_train, y_train, x_test, y_test, params)
@@ -93,6 +113,7 @@ def trial_3(x_train, y_train, x_test, y_test):
 def trial_4(x_train, y_train, x_test, y_test):
     """
     Trial 4: Excludes condos and "levels" data, simplifying the feature set.
+    Tests the impact of a streamlined dataset on model performance.
     """
     params = load_params_from_file()  # Load parameters from file
     return train_and_evaluate_model(x_train, y_train, x_test, y_test, params)
@@ -100,6 +121,7 @@ def trial_4(x_train, y_train, x_test, y_test):
 def trial_5(x_train, y_train, x_test, y_test):
     """
     Trial 5: No condos, no "levels", with SqFt outliers removed.
+    Aims to refine the dataset by removing extreme outlier values.
     """
     params = load_params_from_file()  # Load parameters from file
     return train_and_evaluate_model(x_train, y_train, x_test, y_test, params)
