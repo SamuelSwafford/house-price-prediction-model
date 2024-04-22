@@ -33,7 +33,7 @@ def get_model_with_zip():
     
     X = data.drop(columns=['Listing ID', 'St', 'Address', 'Close Price', 'Close Date', 'List Price', 'LP$/SqFt', 'Close$/SqFt', '#'])
     y = data['Close Price']
-
+    print(X.columns)
     # Standardizing the features (excluding one-hot encoded columns)
     feature_columns_to_scale = ['SqFt']  # add other numerical columns as needed
     scaler = StandardScaler()
