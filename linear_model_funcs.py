@@ -19,7 +19,7 @@ def load_and_clean_data(filepath):
 
 def get_model_with_zip():
     """
-    Train a linear regression model using all available data, incorporating zip codes as a training variable.
+    Train a linear regression model using all available data, incorporating zip codes as a training variable using one hot encoding.
     """
     data = load_and_clean_data('data.csv')
     data = data[data['Type of Home'] == 'Single Family']
@@ -28,14 +28,18 @@ def get_model_with_zip():
         return None, None, None
     data = data.drop(columns=['MLS Area', 'Levels', 'Type of Home'])
 
+    # One-hot encoding the zip code column
+    data = pd.get_dummies(data, columns=['Zip Code'])
+    
     X = data.drop(columns=['Listing ID', 'St', 'Address', 'Close Price', 'Close Date', 'List Price', 'LP$/SqFt', 'Close$/SqFt', '#'])
     y = data['Close Price']
-    
-    # Standardizing the features
+
+    # Standardizing the features (excluding one-hot encoded columns)
+    feature_columns_to_scale = ['SqFt']  # add other numerical columns as needed
     scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
+    data[feature_columns_to_scale] = scaler.fit_transform(data[feature_columns_to_scale])
     
-    X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     model = LinearRegression()
     model.fit(X_train, y_train)
