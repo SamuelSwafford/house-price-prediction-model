@@ -28,6 +28,40 @@ Target encoding was utilized to convert zip code and home type to numeric, captu
 An Ensemble Model leverages the strengths of each model. In this project, 4 Machine Learning Techniques were ustilized: Random Forest, Linear Regression, and XGBoost. By creating the Ensemble Model, it helps generate a more accurate prediction overall.
 ![Ensemble Model](https://github.com/SamuelSwafford/house-price-prediction-model/assets/52751074/9fae57c9-5b23-4589-9329-f3441e36251a)
 
+## Zillow House Comparison to Models
+Identified Two Zillow Listings located in Pflugerville, Texas to compare to our models
+- 13309 Clerk St
+Beds: 4
+Garage Spaces: 2
+Year Built: 2019
+Acres: 0.14
+SqFt 2603
+CDOM: 2 (based on Zillow listing)
+Total Baths: 2.5
+Zip Code: "78660" (Pflugerville, TX)
+Home Type: "Single Family"
+List Price: $450,000
+Linear Regression Model Predicted Price = $469,893.38
+Ensemble Model Model Predicted Price = $464,163.42
+- 1209 Vapor Dr
+Beds 6
+Garage Spaces 8
+Year Built 1978
+Acres 1.1
+SqFt 2863
+CDOM 2 (based on Zillow listing)
+Total Baths 4
+Zip Code "78660" (Pflugerville, TX)
+Home Type "Single Family"
+List Price $899,999
+Line Regression Model Predicted Price = $779,380.94
+Ensemble Model Predicted Price = $741,993.42
+
+## Conclusion
+Overall, sentiment analysis serves as a valuable tool for investors, policymakers, and real estate professionals to understand market sentiment, identify trends, and make informed decisions in the dynamic housing market landscape.
+Predictive Model Analysis in real estate helps to optimize investment decisions and improve property valuation accuracy.
+Using our models, we can come up with a reasonable estimate for a home seller’s potential property valuation within Austin, Texas.
+
 ## Data Summary 
 For Sentiment Analysis, the data analyzed came from News Articles: News API and The New York Times.
 Data utilized to Predict Home Sales for the Machine Learning was obtained from Austin Board of Realtors - Multiple Listing Service.
