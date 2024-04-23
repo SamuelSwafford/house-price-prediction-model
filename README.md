@@ -33,6 +33,7 @@ For Sentiment Analysis, the data analyzed came from News Articles: News API and 
 Data utilized to Predict Home Sales for the Machine Learning was obtained from Austin Board of Realtors - Multiple Listing Service.
 We utilized Sales from the last 6 months that are marked as “Closed”. Sales from 6 months contained a lot of data, so we narrowed it down to Single Family Homes & Condominiums
 from the following 9 Zip Codes: 78746, 78758, 78744, 78664, 78660, 78701, 78620, 78642, 78666. These zip codes are from Austin and it's sorrounding areas.
+
 ![ABOR_MLS](https://github.com/SamuelSwafford/house-price-prediction-model/assets/52751074/f7928e2f-aac0-4512-b79a-ae2cd6e15d1c)
 ## Citations
 MLS Compliance Resources Kit. Austin Board of REALTORS®. (n.d.). https://www.abor.com/ACTNow 
