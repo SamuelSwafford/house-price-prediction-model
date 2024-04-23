@@ -53,8 +53,8 @@ A downward trend in mortgage rates compared to previous highs.
 Furthermore, optimism is evident as Americans display increased confidence in both buying and selling homes, as indicated by the Fannie Mae Home Purchase Sentiment Index.
 
 ## Word Cloud
+![image](https://github.com/SamuelSwafford/house-price-prediction-model/assets/148410176/c99f88bc-cd03-45a0-9dc3-bc2998dc175b)
 
-![image](https://github.com/SamuelSwafford/house-price-prediction-model/assets/148410176/080f8550-7764-416f-b462-5a9f56adfd48)
 
 
 
