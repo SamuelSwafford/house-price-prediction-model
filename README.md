@@ -11,8 +11,13 @@ Predictive modeling allows stakeholders to forecast Austin's housing market tren
 
 ## Sentiment Analysis and Topic Modeling
 
-## Linear Regression Models for Zip Codes
 
+## Linear Regression Models for Zip Codes
+features = ['# Beds', '# Full Baths', '# Half Baths', '# Garage Spaces', 'Year Built', 'Acres', 'SqFt', 'DOM', 'CDOM', 'Zip Code'] ![equation](https://github.com/SamuelSwafford/house-price-prediction-model/assets/52751074/8468c39d-5f98-4bf5-b68e-616669e6af80)
+
+Linear regression is a statistical method that models the relationship between a dependent variable and one or more independent variables by fitting a linear equation to observed data.
+Creating a linear model for each zip code was more accurate for some zip codes and less accurate for others.
+![r](https://github.com/SamuelSwafford/house-price-prediction-model/assets/52751074/565fc968-8bcb-4486-9c8c-1173a158a49d)
 
 ## eXtreme Gradient Boosting
 Gradient boosting is a machine learning ensemble technique that combines the predictions of multiple weak learners (decision trees) sequentially.
