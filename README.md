@@ -56,6 +56,20 @@ Furthermore, optimism is evident as Americans display increased confidence in bo
 ![image](https://github.com/SamuelSwafford/house-price-prediction-model/assets/148410176/c99f88bc-cd03-45a0-9dc3-bc2998dc175b)
 
 
+## Topic Modeling 
+
+Topic Modeling (LDA):
+Topic modeling is a technique used to identify topics or themes present in a collection of documents.Latent Dirichlet Allocation (LDA) was applied to the document-term matrix obtained from CountVectorizer to identify latent topics in the articles. LDA decomposes the document-term matrix into two matrices: one representing the distribution of topics in documents and the other representing the distribution of words in topics. By analyzing the top words associated with each topic, we can gain insights into the key themes or subjects discussed in the articles.
+
+Importance of Topic Modeling (LDA):
+
+Topic modeling, particularly LDA, is crucial for understanding the underlying structure and themes present in large collections of text data, such as articles or documents.
+It helps uncover hidden patterns, trends, and relationships among words and documents.
+LDA can assist in organizing and summarizing large amounts of text data, making it easier to navigate and extract valuable insights.
+In the context of the provided code, topic modeling using LDA helps identify the main topics discussed in the real estate-related articles, providing a structured way to explore and understand the content.
+
+![image](https://github.com/SamuelSwafford/house-price-prediction-model/assets/148410176/10cd782d-9950-4b83-9dcf-35e79680c1cc)
+
 
 
 A word cloud is a visual representation of text data in which the size of each word indicates its frequency or importance. It's a popular and intuitive way to summarize and visualize textual information, making it easier to identify the most prominent words or themes within a body of text. A few of the prominent words listed in News article reviews are rate, home, price etc.
