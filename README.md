@@ -23,6 +23,7 @@ captures nonlinear relationships between features and target variables to model 
 GridSearchCV searches through all the parameter combinations provided in a grid, performing cross-validation on each combination to evaluate its performance.
 The performing hyperparameter turned a range of values like learning rate, maximum depth, the number of estimators, etc.
 Target encoding was utilized to convert zip code and home type to numeric, capture the relationships between categorical values and the target (closing price), and dropped unhelpful variables (# of levels and condos). 
+![FineTune](https://github.com/SamuelSwafford/house-price-prediction-model/assets/52751074/0f11fa20-2451-4d79-8eb4-725b91a98506)
 
 ## Ensemble Model
 An Ensemble Model leverages the strengths of each model. In this project, 4 Machine Learning Techniques were ustilized: Random Forest, Linear Regression, and XGBoost. By creating the Ensemble Model, it helps generate a more accurate prediction overall.
