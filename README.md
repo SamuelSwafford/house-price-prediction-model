@@ -15,8 +15,11 @@ Data utilized to Predict Home Sales for the Machine Learning was obtained from A
 We utilized Sales from the last 6 months that are marked as “Closed”. Sales from 6 months contained a lot of data, so we narrowed it down to Single Family Homes & Condominiums
 from the following 9 Zip Codes: 78746, 78758, 78744, 78664, 78660, 78701, 78620, 78642, 78666. These zip codes are from Austin and it's sorrounding areas.
 
+## Sentiment Analysis and Topic Modeling
 
+## Ensemble Model
 
+## Linear Regression Models for Zip Codes
 
 
 ## Citations
