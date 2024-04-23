@@ -55,6 +55,7 @@ Furthermore, optimism is evident as Americans display increased confidence in bo
 ## Word Cloud
 ![image](https://github.com/SamuelSwafford/house-price-prediction-model/assets/148410176/c99f88bc-cd03-45a0-9dc3-bc2998dc175b)
 
+A word cloud is a visual representation of text data in which the size of each word indicates its frequency or importance. It's a popular and intuitive way to summarize and visualize textual information, making it easier to identify the most prominent words or themes within a body of text. A few of the prominent words listed in News article reviews are rate, home, price etc.
 
 ## Topic Modeling 
 
@@ -71,8 +72,6 @@ In the context of the provided code, topic modeling using LDA helps identify the
 ![image](https://github.com/SamuelSwafford/house-price-prediction-model/assets/148410176/10cd782d-9950-4b83-9dcf-35e79680c1cc)
 
 
-
-A word cloud is a visual representation of text data in which the size of each word indicates its frequency or importance. It's a popular and intuitive way to summarize and visualize textual information, making it easier to identify the most prominent words or themes within a body of text. A few of the prominent words listed in News article reviews are rate, home, price etc.
 
 
 ## Linear Regression Models for Zip Codes
